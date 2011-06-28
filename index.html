@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>textSelect jquery plugin</title>
+<!--[if IE]>
+    <script type='text/javascript' src='../../Resources/firebug-lite/build/firebug-lite.js'></script>
+    <![endif]-->
+<script src="js/jquery-1.4.4.js"></script>
+<script src="js/jquery.textSelect.js"></script>
+<script>
+	$(function () {
+
+		var $selectEg = $('#selectEg');
+		$selectEg.find('button.execute').click(function () {
+			$selectEg.find('.line1').textSelect('select');
+		});
+
+		var $clearEg = $('#clearEg');
+		$clearEg.find("button.execute").click(function () {
+			$clearEg.find('.line2').textSelect('select');
+			//Clear text after 2 seconds;
+			setTimeout(function () {
+				$.textSelect('clear'); //Clear the text
+			}, 2000);
+		});
+
+		var $toStringEg = $('#toStringEg');
+		$toStringEg.find("button.execute").click(function () {
+			alert($.textSelect('toString'));
+		});
+
+		var $deleteEg = $('#deleteEg');
+		$deleteEg.find("button.execute").click(function () {
+			$deleteEg.find('.line1').textSelect('select');
+			$.textSelect('remove');
+		});
+		$deleteEg.find('button.restore').click(function () {
+			if ($deleteEg.find('.line1').length === 0) {
+				$deleteEg.find('.line0').after($('<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>'));
+			}
+		});
+
+		$setRangeEg = $('#setRangeEg');
+		$setRangeEg.find("button.execute").click(function () {
+
+			$.textSelect('setRange', {
+				start : 1,
+				startElement : $setRangeEg.find('.line1'),
+				end : 3,
+				endElement : $setRangeEg.find('.line3')
+			});
+		});
+
+		$getRangeEg = $('#getRangeEg');
+		$getRangeEg.find("button.execute").click(function () {
+
+			$.textSelect('setRange', {
+				start : 1,
+				startElement : $getRangeEg.find('.line1'),
+				end : 3,
+				endElement : $getRangeEg.find('.line3')
+			});
+
+			console.log($.textSelect('getRange'));
+		});
+
+		$("#setRange").click(function () {
+			$.textSelect('setRange', {
+				start : 1,
+				startElement : $("#temp1"),
+				end : 3,
+				endElement : $("#temp3")
+			});
+		});
+
+	});
+</script>
+<style type="text/css">
+.section {
+	border: 1px solid gray;
+	padding: 0 20px 20px;
+	margin: 20px auto;
+	width: 500px;
+}
+
+.testtext {
+	margin-top: 20px;
+}
+</style>
+</head>
+<body>
+	<div id="selectEg" class="section">
+
+		<div class="doco">
+			<h2>.textSelect('select');</h2>
+			<p>
+				<b>Description:</b> Selects the text of an element.
+			</p>
+		</div>
+
+		<div class="example">
+			<h3 class="title">Example</h3>
+			<div class="description">Select the text of an element with the class line 1.</div>
+			<div class="code">
+				<pre>$('.line1').textSelect('select');</pre>
+			</div>
+			<button class="execute">Try It</button>
+			<div class="testtext">
+				<p>Test Data:</p>
+				<div class="temp line0">0 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line2">2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line3">3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="clearEg" class="section">
+
+		<div class="doco">
+			<h2>$.textSelect('clear');</h2>
+			<p>
+				<b>Description:</b> Un-select all selected text.
+			</p>
+		</div>
+
+		<div class="example">
+			<h3 class="title">Example</h3>
+			<div class="description">Select text at line 2 and after 2 seconds clear it.</div>
+			<div class="code">
+				<pre>
+$('.line2').textSelect('select'); //Select text
+
+setTimeout(function(){ //Execute the clear after 2 seconds
+
+	$.textSelect('clear'); //Clear the text
+
+}, 2000);			
+</pre>
+			</div>
+			<button class="execute">Try It</button>
+			<div class="testtext">
+				<p>Test Data:</p>
+				<div class="temp line0">0 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line2">2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line3">3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="toStringEg" class="section">
+
+		<div class="doco">
+			<h2>$.textSelect('toString');</h2>
+			<p>
+				<b>Description:</b> Retrieve selected text as a string.
+			</p>
+		</div>
+
+		<div class="example">
+			<h3 class="title">Example</h3>
+			<div class="description">Get the selected text as a string and put it in an alert.</div>
+			<div class="code">
+				<pre>
+alert($.textSelect('toString'));			
+</pre>
+			</div>
+			<button class="execute">Try It</button>
+			Select some text though.
+			<div class="testtext">
+				<p>Test Data:</p>
+				<div class="temp line0">0 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line2">2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line3">3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="deleteEg" class="section">
+
+		<div class="doco">
+			<h2>$.textSelect('remove');</h2>
+			<p>
+				<b>Description:</b> Removes the selected text from the page.
+			</p>
+		</div>
+
+		<div class="example">
+			<h3 class="title">Example</h3>
+			<div class="description">Select the text in line 1 and then remove it.</div>
+			<div class="code">
+				<pre>
+$('line1').textSelect('select');
+$.textSelect('remove');		
+</pre>
+			</div>
+			<button class="execute">Try It</button>
+			<button class="restore">restore</button>
+			<div class="testtext">
+				<p>Test Data:</p>
+				<div class="temp line0">0 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line2">2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line3">3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="setRangeEg" class="section">
+
+		<div class="doco">
+			<h2>$.textSelect('setRange');</h2>
+			<p>
+				<b>Description:</b> Selects text when a range (a JSON object containing the start and end
+				character positions and start and end elements) is specified.
+			</p>
+		</div>
+
+		<div class="example">
+			<h3 class="title">Example</h3>
+			<div class="description">Select the text from line 1 to 3.</div>
+			<div class="code">
+				<pre>
+$.textSelect('setRange', {
+	start : 1,
+	startElement : $('.line1'),
+	end : 3,
+	endElement : $('.line3')
+});
+
+$.textSelect('getRange');
+</pre>
+			</div>
+			<button class="execute">Try It</button>
+			<div class="testtext">
+				<p>Test Data:</p>
+				<div class="temp line0">0 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line2">2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line3">3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="getRangeEg" class="section">
+
+		<div class="doco">
+			<h2>$.textSelect('getRange');</h2>
+			<p>
+
+				<b>Description:</b> Retrieves a JSON object containing the start and end elements and their
+				character positions relative to the beginning of their elements.
+			</p>
+		</div>
+
+		<div class="example">
+			<h3 class="title">Example</h3>
+			<div class="description">Select the text from line 1 to 3 and output the range.</div>
+			<div class="code">
+				<pre>
+$.textSelect('setRange', {
+	start : 1,
+	startElement : $('.line1'),
+	end : 3,
+	endElement : $('.line3')
+});
+</pre>
+			</div>
+			<button class="execute">Try It</button>
+			<div>
+				<p>Output:</p>
+				<div class="output"></div>
+			</div>
+			<div class="testtext">
+				<p>Test Data:</p>
+				<div class="temp line0">0 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line1">1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line2">2 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+				<div class="temp line3">3 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<button id="getRange">Get Range</button>
+	<button id="setRange">Set Range</button>
+</body>
+</html>
