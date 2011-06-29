@@ -1,4 +1,10 @@
 /**
+ * textSelect jQuery Plug-in
+ * 
+ * Copyright (c) 2011, Simon Chong
+ * 
+ * Licensed under The MIT License which can be obtained from <http://www.opensource.org>
+ * 
  * textSelect is a jQuery Plug-in enables easy manipulation of text using the browsers native text selection.
  * 
  * It was created to bridge the gap between the DOM Range and Selection objects that are missing in Internet Explorer up until version 9.
